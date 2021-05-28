@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/wendelscardua/dotini.svg?branch=main)](https://travis-ci.com/wendelscardua/dotini)
+[![CI Status](https://github.com/wendelscardua/dotini/workflows/CI/badge.svg?branch=main)](https://github.com/wendelscardua/dotini/actions?query=workflow%3ACI+branch%3Amain)
 
 # Dotini
 
