@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/wendelscardua/dotini.svg?branch=main)](https://travis-ci.com/wendelscardua/dotini)
+
 # Dotini
 
 Dotini allows [INI files](https://en.wikipedia.org/wiki/INI_file) to be parsed, created,
