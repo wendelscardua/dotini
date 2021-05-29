@@ -24,6 +24,10 @@ module Dotini
       buffer.string
     end
 
+    def write(io_stream)
+      io_stream.write(to_s)
+    end
+
     class << self
       def load(filename,
                comment_character = ';',

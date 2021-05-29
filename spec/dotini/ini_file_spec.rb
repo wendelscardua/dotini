@@ -58,5 +58,17 @@ module Dotini
         end
       end
     end
+
+    describe 'write' do
+      context 'when instantiated from a basic INI file' do
+        let(:ini_file) { described_class.load(example_ini) }
+
+        it 'results in a similar content, without blank lines, written to io stream' do
+          io_stream = StringIO.new
+          ini_file.write(io_stream)
+          expect(io_stream.string).to eq File.read(example_ini).gsub(/^\s*\n/, '')
+        end
+      end
+    end
   end
 end
