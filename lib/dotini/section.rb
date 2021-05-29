@@ -30,6 +30,7 @@ module Dotini
       {}.tap do |hash|
         key_value_pairs.each do |pair|
           next if pair.key.nil?
+
           hash[pair.key] = pair.value
         end
       end
