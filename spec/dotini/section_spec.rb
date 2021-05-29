@@ -63,5 +63,65 @@ module Dotini
         end
       end
     end
+
+    describe '[]' do
+      let(:existing_key) { 'some-key' }
+      let(:non_existing_key) { 'another-key' }
+      let(:existing_value) { 'some-value' }
+      let(:key_value_pair) do
+        KeyValuePair.new.tap do |pair|
+          pair.key = existing_key
+          pair.value = existing_value
+        end
+      end
+
+      subject(:section) do
+        described_class.new('config').tap do |section|
+          section.key_value_pairs << key_value_pair
+        end
+      end
+
+      it 'returns an existing value pair for an existing key' do
+        expect(section[existing_key].value).to eq existing_value
+      end
+
+      it 'returns a new, unset key-value pair for a new key' do
+        expect(section[non_existing_key].value).to eq nil
+      end
+    end
+
+    describe '[]=' do
+      let(:existing_key) { 'some-key' }
+      let(:non_existing_key) { 'another-key' }
+      let(:existing_value) { 'some-value' }
+      let(:new_value) { 'another-value' }
+      let(:key_value_pair) do
+        KeyValuePair.new.tap do |pair|
+          pair.key = existing_key
+          pair.value = existing_value
+        end
+      end
+
+      subject(:section) do
+        described_class.new('config').tap do |section|
+          section.key_value_pairs << key_value_pair
+        end
+      end
+
+      it 'changes an existing value pair for an existing key' do
+        section[existing_key] = new_value
+        expect(section[existing_key].value).to eq new_value
+      end
+
+      it 'sets a new value for a new key' do
+        section[non_existing_key] = new_value
+        expect(section[non_existing_key].value).to eq new_value
+      end
+
+      it 'preserves old key value when using a new key' do
+        section[non_existing_key] = new_value
+        expect(section[existing_key].value).to eq existing_value
+      end
+    end
   end
 end

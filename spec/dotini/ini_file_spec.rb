@@ -13,14 +13,14 @@ module Dotini
         end
 
         it 'detects sections correctly' do
-          expect(ini_file[nil]).not_to be_nil
-          expect(ini_file['main']).not_to be_nil
-          expect(ini_file['profile foo']).not_to be_nil
-          expect(ini_file['profile bar']).not_to be_nil
+          expect(ini_file[nil].name).to eq nil
+          expect(ini_file['main'].name).to eq 'main'
+          expect(ini_file['profile foo'].name).to eq 'profile foo'
+          expect(ini_file['profile bar'].name).to eq 'profile bar'
         end
 
-        it 'does not detect inexistent sections' do
-          expect(ini_file['profile quux']).to be_nil
+        it 'fetching inexistent sections creates new sections' do
+          expect(ini_file['profile quux'].name).to eq 'profile quux'
         end
 
         it 'detects basic key-value pair correctly' do
