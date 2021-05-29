@@ -22,6 +22,14 @@ module Dotini
       self[key].value = value
     end
 
+    def to_h
+      {}.tap do |hash|
+        key_value_pairs.each do |pair|
+          hash[pair.key] = pair.value
+        end
+      end
+    end
+
     def to_s
       buffer = StringIO.new
       buffer << "[#{name}]\n" unless name.nil?
