@@ -43,9 +43,9 @@ module Dotini
 
     class << self
       def load(filename,
-               comment_character = ';',
-               key_pattern = DEFAULT_KEY_PATTERN,
-               value_pattern = DEFAULT_VALUE_PATTERN)
+               comment_character: ';',
+               key_pattern: DEFAULT_KEY_PATTERN,
+               value_pattern: DEFAULT_VALUE_PATTERN)
         line_pattern = /\A(?<key>#{key_pattern})\s*=\s*(?<value>#{value_pattern})(?:\s*(?<inline_comment>#{comment_character}.*))?\z/
         ini_file = IniFile.new
         current_section = Section.new(nil)
