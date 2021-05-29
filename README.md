@@ -1,4 +1,5 @@
 [![CI Status](https://github.com/wendelscardua/dotini/workflows/CI/badge.svg?branch=main)](https://github.com/wendelscardua/dotini/actions?query=workflow%3ACI+branch%3Amain)
+[![Gem Version](https://badge.fury.io/rb/dotini.svg)](https://badge.fury.io/rb/dotini)
 
 # Dotini
 
