@@ -17,6 +17,16 @@ module Dotini
         Section.new(name).tap { |section| sections << section }
     end
 
+    def to_h
+      {}.tap do |hash|
+        sections.each do |section|
+          (hash[section.name] ||= {}).tap do |section_hash|
+            section_hash.merge! section.to_h
+          end
+        end
+      end
+    end
+
     def to_s
       buffer = StringIO.new
       sections.each do |section|
