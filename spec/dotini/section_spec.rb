@@ -2,6 +2,58 @@
 
 module Dotini
   RSpec.describe Section do
+    describe 'to_h' do
+      subject(:section) do
+        described_class.new(nil).tap do |section|
+          section.key_value_pairs = key_value_pairs
+        end
+      end
+
+      context 'when keys are unique' do
+        let(:first_key_value_pair) do
+          KeyValuePair.new.tap do |pair|
+            pair.key = 'first-key'
+            pair.value = 'first-value'
+            pair.prepended_comments = ['; first']
+          end
+        end
+        let(:second_key_value_pair) do
+          KeyValuePair.new.tap do |pair|
+            pair.key = 'second-key'
+            pair.value = 'second-value'
+            pair.inline_comment = '; second'
+          end
+        end
+        let(:key_value_pairs) { [first_key_value_pair, second_key_value_pair] }
+
+        it 'creates a hash with each key/value pair on it' do
+          expect(section.to_h).to eq({ 'first-key' => 'first-value', 'second-key' => 'second-value' })
+        end
+      end
+
+      context 'when keys are not unique' do
+        let(:first_key_value_pair) do
+          KeyValuePair.new.tap do |pair|
+            pair.key = 'first-key'
+            pair.value = 'first-value'
+            pair.prepended_comments = ['; first']
+          end
+        end
+        let(:second_key_value_pair) do
+          KeyValuePair.new.tap do |pair|
+            pair.key = 'first-key'
+            pair.value = 'second-value'
+            pair.inline_comment = '; second'
+          end
+        end
+        let(:key_value_pairs) { [first_key_value_pair, second_key_value_pair] }
+
+        it 'creates a hash with latest version of each key/value pair on it' do
+          expect(section.to_h).to eq({ 'first-key' => 'second-value' })
+        end
+      end
+    end
+
     describe 'to_s' do
       let(:first_key_value_pair) do
         KeyValuePair.new.tap do |pair|
