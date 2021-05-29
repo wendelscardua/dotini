@@ -18,7 +18,10 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri'] = spec.homepage
   spec.metadata['changelog_uri'] = spec.homepage
 
-  spec.add_development_dependency 'pry', '~> 0.14.1'
+  spec.add_development_dependency 'pry', '~> 0.14'
+  spec.add_development_dependency 'rubocop', '~> 1.15'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.11'
+  spec.add_development_dependency 'rubocop-rake', '~> 0.5'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

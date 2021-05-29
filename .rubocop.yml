@@ -1,0 +1,23 @@
+require:
+  - rubocop-performance
+  - rubocop-rake
+AllCops:
+  NewCops: enable
+Layout/LineLength:
+  Max: 120
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  inherit_mode:
+    merge:
+      - Exclude
+  Exclude:
+    - lib/tasks/**/*
+    - spec/**/*
+Metrics/MethodLength:
+  inherit_mode:
+    merge:
+      - Exclude
+  Max: 30
+Metrics/ModuleLength:
+  Enabled: false
