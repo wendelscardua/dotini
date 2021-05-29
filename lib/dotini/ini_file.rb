@@ -20,8 +20,10 @@ module Dotini
     def to_h
       {}.tap do |hash|
         sections.each do |section|
-          (hash[section.name] ||= {}).tap do |section_hash|
-            section_hash.merge! section.to_h
+          section.to_h.then do |section_hash|
+            next if section_hash.empty?
+
+            (hash[section.name] ||= {}).merge! section_hash
           end
         end
       end

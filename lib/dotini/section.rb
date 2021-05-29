@@ -25,6 +25,7 @@ module Dotini
     def to_h
       {}.tap do |hash|
         key_value_pairs.each do |pair|
+          next if pair.key.nil?
           hash[pair.key] = pair.value
         end
       end
