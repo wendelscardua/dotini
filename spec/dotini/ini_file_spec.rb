@@ -49,6 +49,31 @@ module Dotini
       end
     end
 
+    describe 'to_h' do
+      context 'when instantiated from a basic INI file' do
+        let(:ini_file) { described_class.load(example_ini) }
+        let(:example_content) do
+          {
+            'main' => {
+              'path' => '/home/user/me',
+              'compiler' => 'gcc'
+            },
+            'profile foo' => {
+              'path' => '/home/user/foo',
+              'compiler' => 'ca65'
+            },
+            'profile bar' => {
+              'public_key' => '"3.1415926"'
+            }
+          }
+        end
+
+        it 'results in a hash version of the content, without comments' do
+          expect(ini_file.to_h).to eq example_content
+        end
+      end
+    end
+
     describe 'to_s' do
       context 'when instantiated from a basic INI file' do
         let(:ini_file) { described_class.load(example_ini) }
