@@ -55,7 +55,10 @@ module Dotini
                comment_character: ';',
                key_pattern: DEFAULT_KEY_PATTERN,
                value_pattern: DEFAULT_VALUE_PATTERN)
-        line_pattern = /\A(?<key>#{key_pattern})\s*=\s*(?<value>#{value_pattern})(?:\s*(?<inline_comment>#{comment_character}.*))?\z/
+        line_pattern = /\A(?<key>#{key_pattern})
+                        \s*=\s*
+                        (?<value>#{value_pattern})
+                        (?:\s*(?<inline_comment>#{comment_character}.*))?\z/x
         ini_file = IniFile.new
         current_section = Section.new(nil)
         current_key_value_pair = KeyValuePair.new
