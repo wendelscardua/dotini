@@ -13,7 +13,8 @@ module Dotini
     end
 
     def [](name)
-      sections.find { |section| section.name == name }
+      sections.find { |section| section.name == name } ||
+        Section.new(name).tap { |section| sections << section }
     end
 
     def to_s

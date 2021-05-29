@@ -11,7 +11,15 @@ module Dotini
     end
 
     def [](key)
-      @key_value_pairs.find { |key_pair| key_pair.key == key }
+      key_value_pairs.find { |key_pair| key_pair.key == key } ||
+        KeyValuePair.new.tap do |pair|
+          pair.key = key
+          key_value_pairs << pair
+        end
+    end
+
+    def []=(key, value)
+      self[key].value = value
     end
 
     def to_s
