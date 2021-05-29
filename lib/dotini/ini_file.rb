@@ -8,15 +8,18 @@ module Dotini
 
     attr_accessor :sections
 
+    # Creates a new, empty INI file
     def initialize
       @sections = []
     end
 
+    # Retrieves an existing section, or creates a new one
     def [](name)
       sections.find { |section| section.name == name } ||
         Section.new(name).tap { |section| sections << section }
     end
 
+    # Represents the current INI file as a hash
     def to_h
       {}.tap do |hash|
         sections.each do |section|
@@ -29,6 +32,7 @@ module Dotini
       end
     end
 
+    # Represents the current INI file as a string
     def to_s
       buffer = StringIO.new
       sections.each do |section|
@@ -42,6 +46,11 @@ module Dotini
     end
 
     class << self
+      # Loads an INI file by name
+      # The options are:
+      # - comment_character: which character is used for comments
+      # - key_pattern: a regexp that matches the property keys
+      # - value_pattern: a regexp that matches the property values
       def load(filename,
                comment_character: ';',
                key_pattern: DEFAULT_KEY_PATTERN,
