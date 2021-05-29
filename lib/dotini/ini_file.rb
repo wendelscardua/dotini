@@ -16,6 +16,14 @@ module Dotini
       sections.find { |section| section.name == name }
     end
 
+    def to_s
+      buffer = StringIO.new
+      sections.each do |section|
+        buffer << section.to_s
+      end
+      buffer.string
+    end
+
     class << self
       def load(filename,
                comment_character = ';',
