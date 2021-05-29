@@ -5,6 +5,7 @@ module Dotini
   class KeyValuePair
     attr_accessor :key, :value, :prepended_comments, :inline_comment
 
+    # Creates a new, undefined key/value pair with no comments
     def initialize
       @key = nil
       @value = nil
@@ -12,6 +13,7 @@ module Dotini
       @inline_comment = nil
     end
 
+    # Represents the key/value pair as a string
     def to_s
       buffer = StringIO.new
       prepended_comments.each do |line|

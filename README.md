@@ -23,7 +23,68 @@ Or install it yourself as:
 
 ## Usage
 
-TODO
+### Reading an INI file
+
+Given this INI file:
+
+```ini
+[main]
+username = foo
+; this is a color
+; the color is nice
+color = red
+
+[personal]
+color = cyan
+path = /tmp ; TODO: change later
+```
+
+It can be read with:
+
+```ruby
+  ini_file = Dotini::IniFile.load(filename, options) # options are not required
+
+  ini_file['main']['color'].value # => 'red'
+  ini_file['main']['color'].prepended_comments # => ['; this is a color', '; the color is nice']
+  ini_file['personal']['path'].value # => '/tmp'
+  ini_file['personal']['path'].inline_comment # => '; TODO: change later'
+```
+
+These are the available options:
+
+- `comment_character` (default: `';'`)
+- `key_pattern` (default: `Dotini::IniFile::DEFAULT_KEY_PATTERN`)
+- `value_pattern` (default: `Dotini::IniFile::DEFAULT_VALUE_PATTERN`)
+
+### Creating a new INI file
+
+```ruby
+  ini_file = Dotini::IniFile.new
+  ini_file['profile default']['color'] = 'blue'
+  ini_file['preferences']['width'] = 42
+```
+
+### Saving the INI file
+
+Given the INI file above, it can be turned into a string:
+
+```ruby
+  ini_file.to_s # => "[profile default]\ncolor = blue\n[preferences]\nwidth = 42\n"
+```
+
+...or it can be written to a IO stream:
+
+```ruby
+  File.open('new-file.ini', 'wb') do |file|
+    ini_file.write(file)
+  end
+```
+
+### Converting the INI file to a hash
+
+```ruby
+  ini_file.to_h # => { 'profile default' => { 'color' => 'blue' }, 'preferences' => { 'width' => '42' } }
+```
 
 ## Development
 
@@ -34,7 +95,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/wendelscardua/dotini. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/wendelscardua/dotini/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
