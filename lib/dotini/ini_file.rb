@@ -13,7 +13,20 @@ module Dotini
     end
 
     def [](name)
-      sections.find { |section| section.name == name }
+      sections.find { |section| section.name == name } ||
+        Section.new(name).tap { |section| sections << section }
+    end
+
+    def to_h
+      {}.tap do |hash|
+        sections.each do |section|
+          section.to_h.then do |section_hash|
+            next if section_hash.empty?
+
+            (hash[section.name] ||= {}).merge! section_hash
+          end
+        end
+      end
     end
 
     def to_s

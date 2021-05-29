@@ -13,14 +13,14 @@ module Dotini
         end
 
         it 'detects sections correctly' do
-          expect(ini_file[nil]).not_to be_nil
-          expect(ini_file['main']).not_to be_nil
-          expect(ini_file['profile foo']).not_to be_nil
-          expect(ini_file['profile bar']).not_to be_nil
+          expect(ini_file[nil].name).to eq nil
+          expect(ini_file['main'].name).to eq 'main'
+          expect(ini_file['profile foo'].name).to eq 'profile foo'
+          expect(ini_file['profile bar'].name).to eq 'profile bar'
         end
 
-        it 'does not detect inexistent sections' do
-          expect(ini_file['profile quux']).to be_nil
+        it 'fetching inexistent sections creates new sections' do
+          expect(ini_file['profile quux'].name).to eq 'profile quux'
         end
 
         it 'detects basic key-value pair correctly' do
@@ -45,6 +45,31 @@ module Dotini
             '; second comment about foo compiler'
           ]
           expect(ini_file['profile foo']['compiler'].prepended_comments).to eq(prepended_comments)
+        end
+      end
+    end
+
+    describe 'to_h' do
+      context 'when instantiated from a basic INI file' do
+        let(:ini_file) { described_class.load(example_ini) }
+        let(:example_content) do
+          {
+            'main' => {
+              'path' => '/home/user/me',
+              'compiler' => 'gcc'
+            },
+            'profile foo' => {
+              'path' => '/home/user/foo',
+              'compiler' => 'ca65'
+            },
+            'profile bar' => {
+              'public_key' => '"3.1415926"'
+            }
+          }
+        end
+
+        it 'results in a hash version of the content, without comments' do
+          expect(ini_file.to_h).to eq example_content
         end
       end
     end
